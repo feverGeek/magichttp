@@ -83,6 +83,15 @@ def lower_keys(dict):
     return new_dict
 
 
+def http_strip(http_text):
+    temp = ''
+    http_text = http_text.lstrip()
+    list = http_text.split('\n')
+    for i in list:
+        temp += i.lstrip() + '\n'
+    return temp
+
+
 class MagicHttp:
     def __init__(self, url, **kwargs):
         """
@@ -110,7 +119,7 @@ class MagicHttp:
             host, url = get_urlinfo(url)
 
             if raw:
-                raw = raw.lstrip().encode()
+                raw = http_strip(raw).encode()
                 raw = io.BytesIO(raw)
                 requestline = raw.readline().decode()
                 words = requestline.split()
